@@ -42,7 +42,7 @@ class ServiceController {
       });
     res.status(200).send({
       status: "success",
-      message: `service with id ${id} deleted`,
+      message: `service with id ${id} deleted`, 
     });
   }
 }
