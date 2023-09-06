@@ -14,8 +14,8 @@ const Master = sequelize.define('master', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING},
     imgUrl: {type: DataTypes.STRING},
-    password: {type: DataTypes.STRING},
-    role: {type: DataTypes.STRING, defaultValue: "MASTER"},
+    // password: {type: DataTypes.STRING},
+    // role: {type: DataTypes.STRING, defaultValue: "MASTER"},
 })
 const Service = sequelize.define('service', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
