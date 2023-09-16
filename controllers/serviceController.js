@@ -3,6 +3,7 @@ const { Service } = require("../models/models");
 class ServiceController {
   async getAll(req, res) {
     const services = await Service.findAll({ raw: true });
+    console.log('services = ', services);
     return res.json(services);
   }
 
@@ -14,7 +15,6 @@ class ServiceController {
 
 
   async add(req, res) {
- 
     try {
       const { title, price, duration } = req.body;
       const service = await Service.create({ title, price, duration });

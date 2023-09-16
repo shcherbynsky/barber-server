@@ -8,6 +8,7 @@ const cors = require('cors')
 const path = require('path')
 const router = require('./routes/index')
 const filePathMiddleware = require('./services/cloudinary')
+// const errorHandler = require('./middleWare/errorHandlingMiddleWare')
 
 // const PORT = 5432
 const PORT = process.env.PORT || 5000
@@ -21,12 +22,13 @@ app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
 app.use('/api', router) 
+// app.use(errorHandler)
 
 
 const start = async () => {
     try {
         await sequelize.authenticate()
-        await sequelize.sync()
+        await sequelize.sync({alter: true})
         app.listen(PORT, () => console.log(`server started on port ${PORT}`))
     } catch (error) {
         console.log(error);
