@@ -13,7 +13,6 @@ module.exports = async function (req, res, next) {
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
         // const user = await User.findOne({where: {id: decoded.id}})
         // req.user = user
-        console.log('decoded = ', decoded);
         
         req.user = decoded
         // req.user = decoded

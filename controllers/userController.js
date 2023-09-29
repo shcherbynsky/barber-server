@@ -52,6 +52,7 @@ const login = async (req, res) => {
 };
 
 const check = async (req, res) => {
+  console.log('req = ', req.user.id);
   // return res.status(200).json(req.user);
 
   // const {id} = req.query
@@ -69,13 +70,45 @@ const getOne = async (req, res) => {
   return res.status(200).json({name, tel})
 }
 
+const changePass = async (req, res) => {
+
+  const { newPass, oldPass, userId } = req.body;
+  const {id, name, tel, password} = await User.findByPk(userId);
+  const passwordMatched = bcrypt.compareSync(oldPass, password)
+  if (!passwordMatched) {
+    console.log('password not matched');
+    return res.status(400).json({ message: "Старий пароль не вірний!!" });
+  } else {
+    const hashPassword = await bcrypt.hash(newPass, 5);
+    const user = await User.update(
+      {
+        password: hashPassword,
+      },
+      {
+        where: {
+          id: userId
+        }
+      }
+    )
+    if (user && process.env.SECRET_KEY) {
+      const token = generateJwt(id, tel, name);
+      return res.status(201).json({ token });
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Помилка! Не вдалось змінити пароль!!" });
+    }
+  }
+}
+
 
 
 module.exports = {
   registration,
   login,
   check,
-  getOne
+  getOne,
+  changePass
 };
 // class UserController {
 
